@@ -3,7 +3,7 @@ name = "dbt-playground"
 version = "0.1.0"
 description = "The playground for dbt."
 authors = [
-    { name = "scizorman", email = "tueda1207@gmail.com" }
+    { name = "scizorman", email = "tueda1207@gmail.com" },
 ]
 dependencies = [
     "dbt-snowflake==1.7.0",
