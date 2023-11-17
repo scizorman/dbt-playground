@@ -1,0 +1,30 @@
+name: "dbt_playground"
+
+config-version: 2
+version: "1.0.0"
+
+profile: "dbt_playground"
+
+model-paths:
+  - "models"
+seed-paths:
+  - "seeds"
+test-paths:
+  - "tests"
+analysis-paths:
+  - "analyses"
+macro-paths:
+  - "macros"
+snapshot-paths:
+  - "snapshots"
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+require-dbt-version: ">=1.7.0"
+
+models:
+  dbt_playground:
+    example:
+      materialized: view
