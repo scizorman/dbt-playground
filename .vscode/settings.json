@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "*.sql": "jinja-sql",
+    "*.yml": "jinja-yaml",
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "cSpell.enableFiletypes": [
+    "jinja-sql",
+    "jinja-yaml",
+  ],
+}
