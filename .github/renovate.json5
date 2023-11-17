@@ -10,4 +10,18 @@
     "after 9am and before 6pm on monday",
   ],
   timezone: "Asia/Tokyo",
+  packageRules: [
+    {
+      description: "Restrict Pyython version to 3.11 or lower for dbt compatibility",
+      matchFileNames: [
+        "dbt/.python-version",
+      ],
+      matchPackageNames: [
+        "python",
+      ],
+      allowedVersions: [
+        "<=3.11",
+      ],
+    },
+  ],
 }
