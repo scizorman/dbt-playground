@@ -4,5 +4,6 @@
     "snowflake.snowflake-vsc",
     "innoverio.vscode-dbt-power-user",
     "redhat.vscode-yaml",
+    "hashicorp.terraform",
   ],
 }
