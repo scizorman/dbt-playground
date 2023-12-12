@@ -19,15 +19,22 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "shandy-sqlfmt[jinjafmt]==0.21.0",
+    "yamlfix==1.16.0",
 ]
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.sqlfmt]
-line_length = 120
 exclude = [
-    "target/**/*",
-    "dbt_packages/**/*",
     ".venv/**/*",
+    "dbt_packages/**/*",
+    "target/**/*",
 ]
+verbose = true
+
+[tool.yamlfix]
+explicit_start = false
+section_whitelines = 1
+sequence_style = "block_style"
+quote_basic_values = true
