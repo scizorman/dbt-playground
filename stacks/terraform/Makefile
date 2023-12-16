@@ -4,8 +4,9 @@ AWS_PROFILE := dbt-playground
 
 export AWS_REGION  := ap-northeast-1
 
-aws_command                 := $(if $(CI),aws,aws-vault exec $(AWS_PROFILE) -- aws)
-terraform_command           := $(if $(CI),terraform,aws-vault exec $(AWS_PROFILE) -- terraform)
+aws_command       := $(if $(CI),aws,aws-vault exec $(AWS_PROFILE) -- aws)
+terraform_command := $(if $(CI),terraform,aws-vault exec $(AWS_PROFILE) -- terraform)
+
 terraform_backend_s3_bucket := dbt-playground-terraform-state
 
 export SNOWFLAKE_ACCOUNT       := tk83970.ap-northeast-1.aws
@@ -13,10 +14,11 @@ export SNOWFLAKE_AUTHENTICATOR := JWT
 export SNOWFLAKE_USER          := DBT_PLAYGROUND_TF_SNOW
 export SNOWFLAKE_ROLE          := TERRAFORM
 
-secrets_dir                                    := $(PWD)/secrets
-snowflake_private_key_path                     := $(secrets_dir)/dbt-playground-tf-snow-private-key
-snowflake_private_key_passphrase_path          := $(secrets_dir)/dbt-playground-tf-snow-private-key-passphrase
-export TF_VAR_snowflake_private_key_path        = $(snowflake_private_key_path)
+secrets_dir                           := $(PWD)/secrets
+snowflake_private_key_path            := $(secrets_dir)/dbt-playground-tf-snow-private-key
+snowflake_private_key_passphrase_path := $(secrets_dir)/dbt-playground-tf-snow-private-key-passphrase
+
+export TF_VAR_snowflake_private_key_path       := $(snowflake_private_key_path)
 export TF_VAR_snowflake_private_key_passphrase  = $(shell cat $(snowflake_private_key_passphrase_path))
 
 .PHONY: all
