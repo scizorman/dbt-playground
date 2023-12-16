@@ -4,7 +4,7 @@
     "config:base",
   ],
   labels: [
-    "renovate"
+    "renovate",
   ],
   schedule: [
     "after 9am and before 6pm on monday",
@@ -22,6 +22,30 @@
       allowedVersions: [
         "<=3.11",
       ],
+    },
+    {
+      matchPaths: [
+        "stacks/terraform/**",
+      ],
+      matchUpdateTypes: [
+        "major",
+      ],
+      groupName: "Terraform stacks major dependencies",
+      groupSlug: "terraform-stacks-major-patch",
+    },
+    {
+      matchPaths: [
+        "stacks/terraform/**",
+      ],
+      matchUpdateTypes: [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+      ],
+      groupName: "Terraform stacks non-major dependencies",
+      groupSlug: "terraform-stacks-minor-patch",
+      automerge: true,
     },
   ],
 }
