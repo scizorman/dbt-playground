@@ -1,4 +1,4 @@
-resource "snowflake_warehouse" "dev_xs_warehouse" {
+resource "snowflake_warehouse" "dev_xs" {
   name                                = "DBT_PLAYGROUND_DEV_XS_WH"
   auto_resume                         = true
   auto_suspend                        = 60

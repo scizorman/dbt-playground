@@ -3,12 +3,14 @@ resource "snowflake_role" "engineer" {
 }
 
 resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_dev_xs_warehouse_usage_to_engineer" {
+  depends_on = [snowflake_warehouse.dev_xs]
+
   privileges = ["USAGE"]
   role_name  = snowflake_role.engineer.name
 
   on_account_object {
     object_type = "WAREHOUSE"
-    object_name = snowflake_warehouse.dev_xs_warehouse.name
+    object_name = snowflake_warehouse.dev_xs.name
   }
 }
 
