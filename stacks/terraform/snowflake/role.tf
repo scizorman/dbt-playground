@@ -1,30 +1,24 @@
-resource "snowflake_role" "engineer" {
-  name = "DBT_PLAYGROUND_ENGINEER"
+data "snowflake_role" "sysadmin" {
+  name = "SYSADMIN"
 }
 
-resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_dev_xs_warehouse_usage_to_engineer" {
-  depends_on = [snowflake_warehouse.dev_xs]
-
-  privileges = ["USAGE"]
-  role_name  = snowflake_role.engineer.name
-
-  on_account_object {
-    object_type = "WAREHOUSE"
-    object_name = snowflake_warehouse.dev_xs.name
-  }
+resource "snowflake_role" "dbt_playground_admin" {
+  name    = "DBT_PLAYGROUND_ADMIN"
+  comment = "The role for administrators in dbt-playground."
 }
 
-resource "snowflake_grant_privileges_to_role" "grant_scizorman_to_engineer" {
-  privileges = ["MONITOR"]
-  role_name  = snowflake_role.engineer.name
-
-  on_account_object {
-    object_type = "USER"
-    object_name = "SCIZORMAN"
-  }
+resource "snowflake_role" "dbt_playground_dbt" {
+  name    = "DBT_PLAYGROUND_DBT"
+  comment = "The role for dbt in dbt-playground."
 }
 
-resource "snowflake_role_grants" "grant_engineer" {
-  role_name = snowflake_role.engineer.name
-  users     = ["SCIZORMAN"]
+resource "snowflake_role_grants" "grant_roles_to_sysadmin" {
+  role_name              = data.snowflake_role.sysadmin.name
+  roles                  = [snowflake_role.dbt_playground_admin.name]
+  enable_multiple_grants = true
+}
+
+resource "snowflake_role_grants" "grant_roles_to_dbt_playground_admin" {
+  role_name = snowflake_role.dbt_playground_admin.name
+  roles     = [snowflake_role.dbt_playground_dbt.name]
 }
