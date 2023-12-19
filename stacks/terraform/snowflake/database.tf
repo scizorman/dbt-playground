@@ -24,7 +24,6 @@ resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_tpch_databas
     "USAGE",
     "CREATE TABLE",
     "CREATE VIEW",
-    "CREATE TAG",
   ]
   role_name = snowflake_role.dbt_playground_dbt.name
 
@@ -55,21 +54,7 @@ resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_tpch_databas
 
   on_schema_object {
     future {
-      object_type_plural = "TABLES"
-      in_database        = snowflake_database.dbt_playground_tpch.name
-    }
-  }
-}
-
-resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_tpch_database_future_tags_privileges_to_dbt_playground_dbt" {
-  depends_on = [snowflake_database.dbt_playground_tpch]
-
-  privileges = ["APPLY", "READ"]
-  role_name  = snowflake_role.dbt_playground_dbt.name
-
-  on_schema_object {
-    future {
-      object_type_plural = "TAGS"
+      object_type_plural = "VIEWS"
       in_database        = snowflake_database.dbt_playground_tpch.name
     }
   }
