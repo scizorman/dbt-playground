@@ -7,8 +7,18 @@ resource "snowflake_role" "dbt_playground_admin" {
   comment = "The role for administrators in dbt-playground."
 }
 
+resource "snowflake_role" "dbt_playground_dbt" {
+  name    = "DBT_PLAYGROUND_DBT"
+  comment = "The role for dbt in dbt-playground."
+}
+
 resource "snowflake_role_grants" "grant_roles_to_sysadmin" {
   role_name              = data.snowflake_role.sysadmin.name
   roles                  = [snowflake_role.dbt_playground_admin.name]
   enable_multiple_grants = true
+}
+
+resource "snowflake_role_grants" "grant_roles_to_dbt_playground_admin" {
+  role_name = snowflake_role.dbt_playground_admin.name
+  roles     = [snowflake_role.dbt_playground_dbt.name]
 }
