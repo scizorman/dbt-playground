@@ -59,7 +59,7 @@ resource "snowflake_role" "dbt_playground_dbt_xs_warehouse_usage" {
 
 resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_dbt_xs_warehouse_usage_to_dbt_playground_dbt_xs_warehouse_usage" {
   depends_on = [snowflake_warehouse.dbt_playground_dbt_xs]
-  provider   = snowflake.useradmin
+  provider   = snowflake.securityadmin
 
   privileges = ["USAGE"]
   role_name  = snowflake_role.dbt_playground_dbt_xs_warehouse_usage.name
