@@ -12,7 +12,7 @@ resource "snowflake_role" "dbt_playground_tpch_database_readwrite" {
   comment = "The role for read/write access to the TPC-H database in dbt-playground."
 }
 
-resource "snowflake_grant_privileges_to_role" "grant_to_dbt_playground_tpch_database_writer" {
+resource "snowflake_grant_privileges_to_role" "grant_dbt_playground_tpch_database_privileges_to_dbt_playground_tpch_database_writer" {
   depends_on = [snowflake_database.dbt_playground_tpch]
   provider   = snowflake.securityadmin
 
