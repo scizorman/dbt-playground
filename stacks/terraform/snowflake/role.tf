@@ -37,6 +37,13 @@ resource "snowflake_role_grants" "grant_dbt_playground_dbt_to_dbt_playground_adm
   roles     = [snowflake_role.dbt_playground_admin.name]
 }
 
+resource "snowflake_role_grants" "grant_dbt_playground_dbt_to_dbt_playground_tpch_database_readwrite" {
+  provider = snowflake.useradmin
+
+  role_name = snowflake_role.dbt_playground_tpch_database_readwrite.name
+  roles     = [snowflake_role.dbt_playground_dbt.name]
+}
+
 resource "snowflake_role_grants" "grant_dbt_playground_dbt_xs_warehouse_usage_to_dbt_playground_dbt" {
   provider = snowflake.useradmin
 
