@@ -40,7 +40,7 @@ resource "snowflake_role_grants" "grant_dbt_playground_dbt_to_dbt_playground_adm
 resource "snowflake_role_grants" "grant_dbt_playground_dbt_to_dbt_playground_tpch_database_readwrite" {
   provider = snowflake.useradmin
 
-  role_name = snowflake_role.dbt_playground_tpch_database_readwrite.name
+  role_name = snowflake_role.dbt_playground_database_read_write.name
   roles     = [snowflake_role.dbt_playground_dbt.name]
 }
 
