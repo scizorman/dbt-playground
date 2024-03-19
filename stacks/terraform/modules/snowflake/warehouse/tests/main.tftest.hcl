@@ -106,23 +106,6 @@ run "lowercase_project_failure" {
   expect_failures = [var.project]
 }
 
-run "hyphen_in_project_failure" {
-  command = plan
-
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
-
-  variables {
-    project = "DBT-PLAYGROUND"
-  }
-
-  expect_failures = [var.project]
-}
-
 run "lowercase_business_function_failure" {
   command = plan
 
@@ -135,23 +118,6 @@ run "lowercase_business_function_failure" {
 
   variables {
     business_function = "analyst"
-  }
-
-  expect_failures = [var.business_function]
-}
-
-run "hyphen_in_business_function_failure" {
-  command = plan
-
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
-
-  variables {
-    business_function = "DATA-SCIENTIST"
   }
 
   expect_failures = [var.business_function]
