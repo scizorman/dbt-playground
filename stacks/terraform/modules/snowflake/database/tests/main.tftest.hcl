@@ -1,37 +1,21 @@
-provider "snowflake" {
-  account                = run.vault_setup.snowflake_account
-  authenticator          = run.vault_setup.snowflake_authenticator
-  user                   = run.vault_setup.snowflake_user
-  private_key            = run.vault_setup.snowflake_private_key
-  private_key_passphrase = run.vault_setup.snowflake_private_key_passphrase
-}
+provider "snowflake" {}
 
 provider "snowflake" {
   alias = "sysadmin"
 
-  account                = run.vault_setup.snowflake_account
-  authenticator          = run.vault_setup.snowflake_authenticator
-  user                   = run.vault_setup.snowflake_user
-  private_key            = run.vault_setup.snowflake_private_key
-  private_key_passphrase = run.vault_setup.snowflake_private_key_passphrase
-  role                   = "SYSADMIN"
+  role = "SYSADMIN"
 }
 
 provider "snowflake" {
   alias = "securityadmin"
 
-  account                = run.vault_setup.snowflake_account
-  authenticator          = run.vault_setup.snowflake_authenticator
-  user                   = run.vault_setup.snowflake_user
-  private_key            = run.vault_setup.snowflake_private_key
-  private_key_passphrase = run.vault_setup.snowflake_private_key_passphrase
-  role                   = "SECURITYADMIN"
+  role = "SECURITYADMIN"
 }
 
-run "vault_setup" {
-  module {
-    source = "../testing/vault-setup"
-  }
+provider "snowflake" {
+  alias = "useradmin"
+
+  role = "USERADMIN"
 }
 
 variables {
