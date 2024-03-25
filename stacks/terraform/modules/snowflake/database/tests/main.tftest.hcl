@@ -26,12 +26,6 @@ variables {
 }
 
 run "resource_naming_validation" {
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-  }
-
   assert {
     condition     = snowflake_database.this.name == "TEST_DBT_PLAYGROUND_RAW_DB"
     error_message = "expected the database name to be TEST_DBT_PLAYGROUND_RAW_DB, got ${snowflake_database.this.name}"
@@ -51,12 +45,6 @@ run "resource_naming_validation" {
 run "lowercase_environment_failure" {
   command = plan
 
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-  }
-
   variables {
     environment = "test"
   }
@@ -67,12 +55,6 @@ run "lowercase_environment_failure" {
 run "lowercase_project_failure" {
   command = plan
 
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-  }
-
   variables {
     project = "dbt_playground"
   }
@@ -82,12 +64,6 @@ run "lowercase_project_failure" {
 
 run "lowercase_data_layer_failure" {
   command = plan
-
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-  }
 
   variables {
     data_layer = "raw"

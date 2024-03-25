@@ -27,13 +27,6 @@ variables {
 }
 
 run "resource_naming_validation" {
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
-
   assert {
     condition     = snowflake_warehouse.this.name == "TEST_DBT_PLAYGROUND_ANALYST_WH_S"
     error_message = "expected the warehouse name to be TEST_DBT_PLAYGROUND_ANALYST_WH_S, got ${snowflake_warehouse.this.name}"
@@ -48,13 +41,6 @@ run "resource_naming_validation" {
 run "lowercase_environment_failure" {
   command = plan
 
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
-
   variables {
     environment = "test"
   }
@@ -65,13 +51,6 @@ run "lowercase_environment_failure" {
 run "lowercase_project_failure" {
   command = plan
 
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
-
   variables {
     project = "dbt_playground"
   }
@@ -81,13 +60,6 @@ run "lowercase_project_failure" {
 
 run "lowercase_business_function_failure" {
   command = plan
-
-  providers = {
-    snowflake               = snowflake
-    snowflake.sysadmin      = snowflake.sysadmin
-    snowflake.securityadmin = snowflake.securityadmin
-    snowflake.useradmin     = snowflake.useradmin
-  }
 
   variables {
     business_function = "analyst"
