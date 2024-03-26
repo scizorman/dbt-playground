@@ -1,16 +1,14 @@
 .DELETE_ON_ERROR:
 
+ifeq ($(CI),true)
+else
+include local.mk
+endif
+
 AWS_PROFILE := dbt-playground
 
 aws_command       := $(if $(CI),aws,aws-vault exec $(AWS_PROFILE) -- aws)
 terraform_command := $(if $(CI),terraform,aws-vault exec $(AWS_PROFILE) -- terraform)
-
-secrets_dir                           := $(PWD)/secrets
-snowflake_private_key_path            := $(secrets_dir)/dbt-playground-tf-snow-private-key
-snowflake_private_key_passphrase_path := $(secrets_dir)/dbt-playground-tf-snow-private-key-passphrase
-
-export TF_VAR_snowflake_private_key_path            := $(snowflake_private_key_path)
-export TF_VAR_snowflake_private_key_passphrase_path := $(snowflake_private_key_passphrase_path)
 
 .PHONY: all
 all:
@@ -18,7 +16,6 @@ all:
 
 .PHONY: clean
 clean:
-	-rm -rf $(secrets_dir)
 	find . -type d -name '.terraform' -exec rm -rf {} +
 
 .PHONY: lint
@@ -31,26 +28,16 @@ fmt:
 
 .PHONY: init
 init: $(STACK)/.terraform
-%/.terraform: $(snowflake_private_key_path) $(snowflake_private_key_passphrase_path)
-	$(terraform_command) -chdir=$(@D) init
-$(snowflake_private_key_path):
-	@mkdir -p $(@D)
-	$(aws_command) secretsmanager get-secret-value \
-		--secret-id dbt-playground/tf-snow-private-key \
-		--query SecretString \
-		--output text \
-		> $@
-$(snowflake_private_key_passphrase_path):
-	@mkdir -p $(@D)
-	$(aws_command) secretsmanager get-secret-value \
-		--secret-id dbt-playground/tf-snow-private-key-passphrase \
-		--query SecretString \
-		--output text \
-		> $@
+%/.terraform:
+	$(terraform_command) -chdir=$(@D) init -upgrade
 
 .PHONY: show
 show: $(STACK)/.terraform
 	$(terraform_command) -chdir=$(<D) show
+
+.PHONY: test
+test: $(STACK)/.terraform
+	$(terraform_command) -chdir=$(<D) test
 
 .PHONY: validate
 validate: $(STACK)/.terraform
