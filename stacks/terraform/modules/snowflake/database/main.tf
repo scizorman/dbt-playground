@@ -5,7 +5,7 @@ locals {
   database_writer_privileges = ["CREATE SCHEMA"]
 
   schema_reader_privileges = ["USAGE"]
-  schema_writer_privileges = ["MODIFY", "MONITOR", "CREATE TABLE", "CREATE VIEW"]
+  schema_writer_privileges = ["CREATE TABLE", "CREATE VIEW"]
 
   schema_object_reader_privileges = {
     "TABLES" = ["SELECT", "REFERENCES"]
