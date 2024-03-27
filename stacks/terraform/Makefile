@@ -1,14 +1,8 @@
-.DELETE_ON_ERROR:
-
 ifeq ($(CI),true)
+include ci.mk
 else
 include local.mk
 endif
-
-AWS_PROFILE := dbt-playground
-
-aws_command       := $(if $(CI),aws,aws-vault exec $(AWS_PROFILE) -- aws)
-terraform_command := $(if $(CI),terraform,aws-vault exec $(AWS_PROFILE) -- terraform)
 
 .PHONY: all
 all:
@@ -27,30 +21,31 @@ fmt:
 	terraform fmt -recursive
 
 .PHONY: init
-init: $(STACK)/.terraform
-%/.terraform:
-	$(terraform_command) -chdir=$(@D) init -upgrade
+init:
+	$(terraform_command) -chdir=$(MODULE) init \
+		-reconfigure \
+		-upgrade
 
 .PHONY: show
-show: $(STACK)/.terraform
-	$(terraform_command) -chdir=$(<D) show
+show: init
+	$(terraform_command) -chdir=$(MODULE) show
 
 .PHONY: test
-test: $(STACK)/.terraform
-	$(terraform_command) -chdir=$(<D) test
+test: init
+	$(terraform_command) -chdir=$(MODULE) test
 
 .PHONY: validate
-validate: $(STACK)/.terraform
-	$(terraform_command) -chdir=$(<D) validate
+validate: init
+	$(terraform_command) -chdir=$(MODULE) validate
 
 .PHONY: plan
 plan: validate
-	$(terraform_command) -chdir=$(STACK) plan -detailed-exitcode
+	$(terraform_command) -chdir=$(MODULE) plan -detailed-exitcode
 
 .PHONY: apply
 apply: validate
-	$(terraform_command) -chdir=$(STACK) apply
+	$(terraform_command) -chdir=$(MODULE) apply
 
 .PHONY: destroy
-destroy: $(STACK)/.terraform
-	$(terraform_command) -chdir=$(STACK) destroy -auto-approve=false
+destroy: init
+	$(terraform_command) -chdir=$(MODULE) destroy -auto-approve=false
