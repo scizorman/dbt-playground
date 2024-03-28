@@ -35,3 +35,6 @@ jobs:
           terraform_version: 1.7.5
       - name: Test
         run: ./scripts/test-modules.sh
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.CI_DBT_PLAYGROUND_TERRAFORM_SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.CI_DBT_PLAYGROUND_TERRAFORM_SNOWFLAKE_PRIVATE_KEY_PASSPHRASE }}
