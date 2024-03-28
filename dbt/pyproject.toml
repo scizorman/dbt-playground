@@ -6,7 +6,7 @@ authors = [
     { name = "scizorman", email = "tueda1207@gmail.com" },
 ]
 dependencies = [
-    "dbt-snowflake==1.7.1",
+    "dbt-snowflake==1.7.3",
 ]
 readme = "README.md"
 requires-python = ">= 3.11"
