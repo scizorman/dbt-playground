@@ -1,0 +1,40 @@
+name: Terraform stacks
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/terraform-stacks.yaml
+      - stacks/terraform/**
+
+defaults:
+  run:
+    working-directory: stacks/terraform
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+      - name: Lint
+        run: make lint
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+      - name: Test
+        run: ./scripts/test-modules.sh
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.CI_DBT_PLAYGROUND_TERRAFORM_SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ${{ secrets.CI_DBT_PLAYGROUND_TERRAFORM_SNOWFLAKE_PRIVATE_KEY_PASSPHRASE }}
